@@ -1,0 +1,506 @@
+{
+	"info": {
+		"_postman_id": "3ad6ac76-f0b2-42e7-ac13-0e683a061c91",
+		"name": "Inventory-Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Autenticação",
+			"item": [
+				{
+					"name": "Autentica o Usuário",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"jwtToken\", jsonData.jwtToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"admin123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://diogob-inventory-management.herokuapp.com/authenticate",
+							"protocol": "https",
+							"host": [
+								"diogob-inventory-management",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Produtos",
+			"item": [
+				{
+					"name": "Cria Produto do Tipo Móvel",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productCode\": \"AAA-111\",\r\n    \"description\": \"Cadeira de escritório\",\r\n    \"productType\": \"MOVEL\",\r\n    \"supplierValue\": 1000.00,\r\n    \"availableAmount\": 15\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://diogob-inventory-management.herokuapp.com/products",
+							"protocol": "https",
+							"host": [
+								"diogob-inventory-management",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cria Produto do Tipo Eletrodoméstico",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productCode\": \"CCC-111\",\r\n    \"description\": \"Liquidificador\",\r\n    \"productType\": \"ELETRODOMESTICO\",\r\n    \"supplierValue\": 100.00,\r\n    \"availableAmount\": 30\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://diogob-inventory-management.herokuapp.com/products",
+							"protocol": "https",
+							"host": [
+								"diogob-inventory-management",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cria Produto do Tipo Eletrônico",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productCode\": \"BBB-111\",\r\n    \"description\": \"Vitrola Retrô\",\r\n    \"productType\": \"ELETRONICO\",\r\n    \"supplierValue\": 700.00,\r\n    \"availableAmount\": 20\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://diogob-inventory-management.herokuapp.com/products",
+							"protocol": "https",
+							"host": [
+								"diogob-inventory-management",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lista Todos os Produtos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://diogob-inventory-management.herokuapp.com/products",
+							"protocol": "https",
+							"host": [
+								"diogob-inventory-management",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Busca o Produto pelo ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://diogob-inventory-management.herokuapp.com/products/839afd37-a519-42f1-994b-e18794d960db",
+							"protocol": "https",
+							"host": [
+								"diogob-inventory-management",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"products",
+								"839afd37-a519-42f1-994b-e18794d960db"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pesquisa Produtos pelo Código",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://diogob-inventory-management.herokuapp.com/products?productCode=AAA-111",
+							"protocol": "https",
+							"host": [
+								"diogob-inventory-management",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "productCode",
+									"value": "AAA-111"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pesquisa Produtos pelo Tipo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://diogob-inventory-management.herokuapp.com/products?productType=ELETRONICO",
+							"protocol": "https",
+							"host": [
+								"diogob-inventory-management",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "productType",
+									"value": "ELETRONICO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Altera Produto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productCode\": \"AAA-111\",\r\n    \"description\": \"Cadeira de escritório\",\r\n    \"productType\": \"MOVEL\",\r\n    \"supplierValue\": 1000.00,\r\n    \"availableAmount\": 16\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://diogob-inventory-management.herokuapp.com/products/8df82572-251f-46ea-babd-d64b66e23916",
+							"protocol": "https",
+							"host": [
+								"diogob-inventory-management",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"products",
+								"8df82572-251f-46ea-babd-d64b66e23916"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Produto",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://diogob-inventory-management.herokuapp.com/products/29a73f9b-771d-48af-9b34-c72517981df7",
+							"protocol": "https",
+							"host": [
+								"diogob-inventory-management",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"products",
+								"29a73f9b-771d-48af-9b34-c72517981df7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Movimentos de Estoque",
+			"item": [
+				{
+					"name": "Cria Movimento de Entrada",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"inventoryType\": \"ENTRADA\",\r\n    \"inventoryAmount\": 20\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://diogob-inventory-management.herokuapp.com/products/839afd37-a519-42f1-994b-e18794d960db/inventories",
+							"protocol": "https",
+							"host": [
+								"diogob-inventory-management",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"products",
+								"839afd37-a519-42f1-994b-e18794d960db",
+								"inventories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cria Movimento de Saída",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"inventoryType\": \"SAIDA\",\r\n    \"inventoryAmount\": 100,\r\n    \"saleValue\": 500.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://diogob-inventory-management.herokuapp.com/products/0aea5ee0-f4a9-4c30-b327-477c54682d4c/inventories",
+							"protocol": "https",
+							"host": [
+								"diogob-inventory-management",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"products",
+								"0aea5ee0-f4a9-4c30-b327-477c54682d4c",
+								"inventories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lista Todos Movimentos do Produto",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://diogob-inventory-management.herokuapp.com/products/839afd37-a519-42f1-994b-e18794d960db/inventories",
+							"protocol": "https",
+							"host": [
+								"diogob-inventory-management",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"products",
+								"839afd37-a519-42f1-994b-e18794d960db",
+								"inventories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Busca  os Movimentos do Produto pelo Tipo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://diogob-inventory-management.herokuapp.com/products/839afd37-a519-42f1-994b-e18794d960db/inventories?inventoryType=SAIDA",
+							"protocol": "https",
+							"host": [
+								"diogob-inventory-management",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"products",
+								"839afd37-a519-42f1-994b-e18794d960db",
+								"inventories"
+							],
+							"query": [
+								{
+									"key": "inventoryType",
+									"value": "SAIDA"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Disponibilidade em Estoque",
+			"item": [
+				{
+					"name": "Busca a Disponibilidade por Tipo de Produto",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://diogob-inventory-management.herokuapp.com/products/amounts?productTypes=MOVEL",
+							"protocol": "https",
+							"host": [
+								"diogob-inventory-management",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"products",
+								"amounts"
+							],
+							"query": [
+								{
+									"key": "productTypes",
+									"value": "MOVEL"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Lucro de Vendas",
+			"item": [
+				{
+					"name": "Busca o Lucro do Produto",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://diogob-inventory-management.herokuapp.com/products/0aea5ee0-f4a9-4c30-b327-477c54682d4c/profits",
+							"protocol": "https",
+							"host": [
+								"diogob-inventory-management",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"products",
+								"0aea5ee0-f4a9-4c30-b327-477c54682d4c",
+								"profits"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{jwtToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "jwtToken",
+			"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY0Njk3MTI3MSwiaWF0IjoxNjQ2OTUzMjcxfQ.6inq-oSfWXtUfPDBSCHwd8rSBfJS6FHH5Z3N12EIV-iUSmG5VcbzxawD5YqqddO8O-AUUN8MYzLVxXpe7Cu5eQ"
+		}
+	]
+}
