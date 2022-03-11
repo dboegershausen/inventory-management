@@ -50,7 +50,9 @@ public class InventoryController {
         var inventory = new Inventory();
         BeanUtils.copyProperties(inventoryDto, inventory);
         inventory.setProduct(productOptional.get());
-        inventory.setSaleDate(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
+        if (inventoryDto.getInventoryType().equals(InventoryType.SAIDA)) {
+            inventory.setSaleDate(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
+        }
         inventoryService.save(inventory);
         return ResponseEntity.status(HttpStatus.CREATED).body(inventory);
     }
