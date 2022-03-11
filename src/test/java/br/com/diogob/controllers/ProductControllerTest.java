@@ -8,6 +8,8 @@ import br.com.diogob.inventory.controllers.ProductController;
 import br.com.diogob.inventory.dtos.ProductDto;
 import br.com.diogob.inventory.enums.ProductType;
 import br.com.diogob.inventory.models.Product;
+import br.com.diogob.inventory.services.ProductAmountService;
+import br.com.diogob.inventory.services.ProductProfitService;
 import br.com.diogob.inventory.services.ProductService;
 import br.com.diogob.inventory.specifications.SpecificationTemplate;
 import org.junit.jupiter.api.Test;
@@ -32,6 +34,12 @@ class ProductControllerTest {
 
     @Mock
     ProductService productService;
+
+    @Mock
+    ProductAmountService productAmountService;
+
+    @Mock
+    ProductProfitService productProfitService;
 
     @Mock
     SpecificationTemplate.ProductSpecification spec;
@@ -59,6 +67,17 @@ class ProductControllerTest {
         assertNotNull(productsResponse.getBody());
         assertEquals(HttpStatus.OK, productsResponse.getStatusCode());
         verify(productService, times(1)).findById(product.getProductId());
+    }
+
+    @Test
+    void should_not_return_a_invalid_product() {
+        var productId = UUID.randomUUID();
+        when(productService.findById(any(UUID.class))).thenReturn(Optional.empty());
+
+        var productsResponse = productController.getProduct(productId);
+
+        assertEquals(HttpStatus.NOT_FOUND, productsResponse.getStatusCode());
+        verify(productService, times(1)).findById(productId);
     }
 
     @Test
@@ -172,6 +191,41 @@ class ProductControllerTest {
 
         assertEquals(HttpStatus.NOT_FOUND, productsResponse.getStatusCode());
         verify(productService, times(1)).findById(productId);
+    }
+
+    @Test
+    void should_calculate_profit() {
+        var product = homeApplianceProduct();
+        when(productService.findById(any(UUID.class))).thenReturn(Optional.of(product));
+
+        var productsResponse = productController.getProductProfit(product.getProductId());
+
+        assertNotNull(productsResponse.getBody());
+        assertEquals(HttpStatus.OK, productsResponse.getStatusCode());
+        verify(productService, times(1)).findById(product.getProductId());
+        verify(productProfitService, times(1)).calculateProductProfit(product);
+    }
+
+    @Test
+    void should_not_calculate_profit_in_a_invalid_product() {
+        var productId = UUID.randomUUID();
+        when(productService.findById(any(UUID.class))).thenReturn(Optional.empty());
+
+        var productsResponse = productController.getProductProfit(productId);
+
+        assertEquals(HttpStatus.NOT_FOUND, productsResponse.getStatusCode());
+        verify(productService, times(1)).findById(productId);
+    }
+
+    @Test
+    void should_calculate_amount() {
+        var productTypes = List.of(ProductType.ELETRODOMESTICO);
+
+        var productsResponse = productController.getProductAmounts(productTypes);
+
+        assertNotNull(productsResponse.getBody());
+        assertEquals(HttpStatus.OK, productsResponse.getStatusCode());
+        verify(productAmountService, times(1)).calculateProductAmountByProductTypes(productTypes);
     }
 
     private Product homeApplianceProduct() {
