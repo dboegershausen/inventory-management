@@ -1,7 +1,6 @@
 package br.com.diogob.inventory.services;
 
 import br.com.diogob.inventory.models.Product;
-import br.com.diogob.inventory.enums.ProductType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;

@@ -25,7 +25,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/products")
-@CrossOrigin(origins = "*", maxAge = 3600)
 public class ProductController {
 
     ProductService productService;
@@ -60,7 +59,7 @@ public class ProductController {
         }
         var product = productOptional.get();
         if (!product.getProductCode().equals(productDto.getProductCode()) && productService.isProductCodeInUse(productDto.getProductCode())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("error","Product code already exists."));
         }
         BeanUtils.copyProperties(productDto, product);
         return ResponseEntity.status(HttpStatus.OK).body(productService.save(product));

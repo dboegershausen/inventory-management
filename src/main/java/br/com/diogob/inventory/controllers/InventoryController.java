@@ -26,7 +26,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/products/{productId}/inventories")
-@CrossOrigin(origins = "*", maxAge = 3600)
 public class InventoryController {
 
     InventoryService inventoryService;

@@ -89,6 +89,16 @@ class ProductAmountServiceTest {
     }
 
     @Test
+    void should_not_decrement_amount_on_invalid_product() {
+        var productId = UUID.randomUUID();
+        when(productRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
+
+        productAmountService.decrementAmount(productId, 10L);
+
+        verify(productRepository, times(1)).findById(productId);
+    }
+
+    @Test
     void should_increment_amount() {
         var product = homeApplianceProduct();
         when(productRepository.findById(any(UUID.class))).thenReturn(Optional.of(product));
@@ -100,6 +110,16 @@ class ProductAmountServiceTest {
         assertEquals(25L, optionalProduct.get().getAvailableAmount());
         verify(productRepository, times(2)).findById(product.getProductId());
         verify(productRepository, times(1)).save(product);
+    }
+
+    @Test
+    void should_not_increment_amount_on_invalid_product() {
+        var productId = UUID.randomUUID();
+        when(productRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
+
+        productAmountService.incrementAmount(productId, 10L);
+
+        verify(productRepository, times(1)).findById(productId);
     }
 
     private Product homeApplianceProduct() {

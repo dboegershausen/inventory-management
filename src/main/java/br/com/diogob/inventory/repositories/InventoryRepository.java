@@ -1,6 +1,5 @@
 package br.com.diogob.inventory.repositories;
 
-import br.com.diogob.inventory.enums.InventoryType;
 import br.com.diogob.inventory.models.Inventory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

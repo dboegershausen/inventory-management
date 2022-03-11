@@ -1,6 +1,5 @@
 package br.com.diogob.inventory.services.impl;
 
-import br.com.diogob.inventory.enums.InventoryType;
 import br.com.diogob.inventory.models.Inventory;
 import br.com.diogob.inventory.models.Product;
 import br.com.diogob.inventory.models.ProductProfit;

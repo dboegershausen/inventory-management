@@ -12,7 +12,6 @@ import br.com.diogob.inventory.services.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -41,8 +40,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
 
         if (Objects.nonNull(username) && Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
-            UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(username);
-            if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+            var userDetails = jwtUserDetailsService.loadUserByUsername(username);
+            if (Boolean.TRUE.equals(jwtTokenUtil.validateToken(jwtToken, userDetails))) {
                 var usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken
