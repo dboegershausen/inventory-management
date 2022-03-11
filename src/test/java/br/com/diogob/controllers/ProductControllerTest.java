@@ -8,6 +8,7 @@ import br.com.diogob.inventory.controllers.ProductController;
 import br.com.diogob.inventory.dtos.ProductDto;
 import br.com.diogob.inventory.enums.ProductType;
 import br.com.diogob.inventory.models.Product;
+import br.com.diogob.inventory.models.ProductProfit;
 import br.com.diogob.inventory.services.ProductAmountService;
 import br.com.diogob.inventory.services.ProductProfitService;
 import br.com.diogob.inventory.services.ProductService;
@@ -196,7 +197,9 @@ class ProductControllerTest {
     @Test
     void should_calculate_profit() {
         var product = homeApplianceProduct();
+        var productProfit = productProfit();
         when(productService.findById(any(UUID.class))).thenReturn(Optional.of(product));
+        when(productProfitService.calculateProductProfit(product)).thenReturn(productProfit);
 
         var productsResponse = productController.getProductProfit(product.getProductId());
 
@@ -257,6 +260,15 @@ class ProductControllerTest {
                 .productType(ProductType.ELETRODOMESTICO)
                 .supplierValue(new BigDecimal(250.00))
                 .availableAmount(15L)
+                .build();
+    }
+
+    private ProductProfit productProfit() {
+        return ProductProfit.builder()
+                .productCode("AAA-111")
+                .productId(UUID.randomUUID())
+                .salesAmount(15L)
+                .profit(new BigDecimal(2500.00))
                 .build();
     }
 
